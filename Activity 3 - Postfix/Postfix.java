@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.LinkedList;
 import java.util.Stack;
 
-// The Postfix class
+// The PMDASCalculator class
 public class Postfix {
     static public void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -11,7 +11,7 @@ public class Postfix {
         
         // Using a while loop
         while (Integer.parseInt(ask) == 1) { 
-            System.out.print("\nEnter an equation: ");
+            System.out.print("\nEnter an infix equation: ");
             equation = scan.nextLine().replaceAll(" ", ""); // replaces white spaces
             convertPostfix(equation);
 
@@ -40,11 +40,11 @@ public class Postfix {
             char ch = equation.charAt(x); // the variable for a character
 
             // Checks if the character is a digit
-            if (Character.isDigit(ch)) { 
+            if (Character.isDigit(ch) || dotOp(ch)) { 
                 value = value.concat(Character.toString(ch));
                 System.out.println("Value: " + value);
 
-                if (x < equation.length()-1 && !Character.isDigit(equation.charAt(x+1)) || x == equation.length()-1) {
+                if ((x < equation.length()-1 && !Character.isDigit(equation.charAt(x+1)) && !dotOp(equation.charAt(x+1))) || x == equation.length()-1) {
                     result.addLast(value);
                     value = "";
                     
@@ -81,7 +81,7 @@ public class Postfix {
                 
                 else {
                     while (!operator.isEmpty() && checkPrecedence(ch) <= checkPrecedence(operator.peek())) {
-                        result.addLast(String.valueOf(operator.pop())); // Append operators to nResult
+                        result.addLast(String.valueOf(operator.pop())); // adds operator to result
                     }
                     
                     operator.push(ch);
@@ -110,6 +110,11 @@ public class Postfix {
     // The isOperator method checks if the character is an operator
     public static boolean isOperator(char ch) {
         return ch == '+' || ch == '-' || ch == '*' || ch == '/';
+    }
+    
+    // The dotOp method checks if the character is a dot
+    public static boolean dotOp(char ch) {
+        return ch == '.';
     }
     
     // The checkPrecedence method checks if the operator has high/low precedence
