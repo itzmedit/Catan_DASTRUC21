@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.LinkedList;
 import java.util.Stack;
 
-// The PMDASCalculator class
+// The Postfix class
 public class Postfix {
     static public void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -109,7 +109,7 @@ public class Postfix {
 
     // The isOperator method checks if the character is an operator
     public static boolean isOperator(char ch) {
-        return ch == '+' || ch == '-' || ch == '*' || ch == '/';
+        return ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '^';
     }
     
     // The dotOp method checks if the character is a dot
@@ -120,6 +120,8 @@ public class Postfix {
     // The checkPrecedence method checks if the operator has high/low precedence
     public static int checkPrecedence(char operator) {
         switch (operator) {
+            case '^':
+                return 3;
             case '*':
             case '/':
                 return 2;
