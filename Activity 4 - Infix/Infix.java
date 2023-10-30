@@ -10,7 +10,7 @@ public class Infix {
 
       // Using a while loop
       while (Integer.parseInt(ask) == 1) {
-         System.out.print("\nEnter an equation: ");
+         System.out.print("\nEnter a postfix equation: ");
          equation = scan.nextLine();
          convertInfix(equation);
 
@@ -68,7 +68,9 @@ public class Infix {
          }
 
          // Checks if the string is a non-numerical data
-         else {
+         else { 
+            boolean hasPara = false;
+
             if (result.size() != 0) {
                int x;
                
@@ -80,19 +82,21 @@ public class Infix {
                      for (int y = x; y >= 0; y--) {
                         if (result.get(y).equals("#")) {
                            result.add(y+1, "(");
+                           hasPara = true;
                            break;
                         }
                      }
-                     
+
                      // Adding close parenthesis
                      result.addLast(")");
-                     
                      break; 
                   }
                }
                
                operator.addLast(value.charAt(0)); // adds value to operator 
             }
+
+            if (!hasPara) { result.addFirst("("); } // adds open parenthesis at first in result
          }
        
          // To check if the values are separated correctly 
@@ -102,7 +106,7 @@ public class Infix {
          System.out.println("Result content: " + result);
       }
       
-      result.addFirst("("); // adds open parenthesis at first in result
+      //for (int x = countOp - countOpen; x > 0; x++) { result.addFirst("("); } adds open parenthesis at first in result
       
       // Prints the result
       System.out.print("\nInfix: ");
@@ -114,11 +118,11 @@ public class Infix {
 
    // invalidInputYN method with an input as a parameter
    public static boolean invalid(String _input) {
-      return ((_input.length() != 1 || !Character.isDigit(_­input.charAt(0))) || (Integer.parseInt(_input) != 1 && Integer.parseInt(_input) != 2));
+      return ((_input.length() != 1 || !Character.isDigit(_input.charAt(0))) || (Integer.parseInt(_input) != 1 && Integer.parseInt(_input) != 2));
    }
    
    //The isOperator method checks if the character is an operator
    public static boolean isOp(char ch) {
-      return ch == '+' || ch == '-' || ch == '*' || ch == '/';
+      return ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '^';
    }
 }
