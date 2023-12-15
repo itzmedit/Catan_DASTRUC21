@@ -3,25 +3,25 @@ import java.util.Scanner;
 
 // class Node
 class Node {
-   int key;
+   double key;
    Node left, right;
 
    // Constructor
-   public Node(int item) {
+   public Node(double item) {
         key = item;
         left = right = null;
    }
 }
 
 // class BinaryTree
-public class BinaryTreeMain {
+public class BinaryTree {
     Node root;
 
     // Constructor
-    BinaryTreeMain() { root = null; }
+    BinaryTree() { root = null; }
 
     // insert method
-    Node insert(Node root, int key) {
+    Node insert(Node root, double key) {
         if (root == null) {
             root = new Node(key);
             return root;
@@ -35,34 +35,95 @@ public class BinaryTreeMain {
     }
    
     // printInorder method
-	void printInorder(Node node) {
-		if (node == null) { return; }
+	 void printInorder(Node node) {
+        if (node == null) { return; }
+        
+        // Prints the left
+		  printInorder(node.left);
+      
+        String num = node.key + "";
 
-		printInorder(node.left);
-		System.out.print(node.key + " ");
-		printInorder(node.right);
-	}   
+        int index = num.indexOf('.'); // index of a dot operator
+            
+        // Checks if the result has decimal values
+        if (num.charAt(index+1) == '0' && num.length() == index+2) {
+            StringBuilder result = new StringBuilder(num);
+   
+            // Sets characters into null
+            String str = " ";
+            for (int x = index; x < num.length(); x++) { result.setCharAt(x, str.charAt(0)); }
+       
+            String r = result.toString().replaceAll(" ", "");
+            System.out.print(r + " "); // prints the result 
+        }
+
+        // Prints the result with decimal values
+        else { System.out.print(node.key + " "); }
+      
+        // Prints the right
+	     printInorder(node.right);
+	 }   
 
     // printPreorder method
-  	void printPreorder(Node node) {
+  	 void printPreorder(Node node) {
         if (node == null) { return; }
 
-        System.out.print(node.key + " ");
+        String num = node.key + "";
+
+        int index = num.indexOf('.'); // index of a dot operator
+            
+        // Checks if the result has decimal values
+        if (num.charAt(index+1) == '0' && num.length() == index+2) {
+            StringBuilder result = new StringBuilder(num);
+   
+            // Sets characters into null
+            String str = " ";
+            for (int x = index; x < num.length(); x++) { result.setCharAt(x, str.charAt(0)); }
+       
+            String r = result.toString().replaceAll(" ", "");
+            System.out.print(r + " "); // prints the result 
+        }
+
+        // Prints the result with decimal values
+        else { System.out.print(node.key + " "); }
+
+        // Prints the left
         printPreorder(node.left);
+        // Prints the right
         printPreorder(node.right);
-   }
+    }
 
     // printPostorder method
-  	void printPostorder(Node node) {
+  	 void printPostorder(Node node) {
         if (node == null) { return; }
 
+        // Prints the left
         printPostorder(node.left);
+        // Prints the right
         printPostorder(node.right);
-        System.out.print(node.key + " ");
+        
+        String num = node.key + "";
+
+        int index = num.indexOf('.'); // index of a dot operator
+            
+        // Checks if the result has decimal values
+        if (num.charAt(index+1) == '0' && num.length() == index+2) {
+            StringBuilder result = new StringBuilder(num);
+   
+            // Sets characters into null
+            String str = " ";
+            for (int x = index; x < num.length(); x++) { result.setCharAt(x, str.charAt(0)); }
+       
+            String r = result.toString().replaceAll(" ", "");
+            System.out.print(r + " "); // prints the result 
+        }
+
+        // Prints the result with decimal values
+        else { System.out.print(node.key + " "); }
     }
     
     // search method
-    Node search(Node root, int key) {
+    Node search(Node root, double key) {
         if (root == null || root.key == key) { return root; }
         
         if (key < root.key) { return search(root.left, key); }
@@ -80,7 +141,7 @@ public class BinaryTreeMain {
     }
 
     // delete method
-    Node delete(Node root, int key) {
+    Node delete(Node root, double key) {
         if (root == null) { return root; }
         
         if (key < root.key) { root.left = delete(root.left, key); } 
@@ -102,7 +163,7 @@ public class BinaryTreeMain {
     // main method
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        BinaryTreeMain tree = new BinaryTreeMain();
+        BinaryTree tree = new BinaryTree();
         boolean tryProg = true;
         String[] value = new String[1000];
         String input;
@@ -122,11 +183,11 @@ public class BinaryTreeMain {
                 
                 for (String val : value) { if (invalidInput(val)) { invalid = true; } }
 
-                if (invalid) { System.out.println("\nInvalid input! Please enter again..."); }
+                if (invalid) { System.out.print("\nInvalid input! Please enter again..."); }
             
             } while (invalid); // let the user enter again if invalid
 
-            for (String val : value) { tree.root = tree.insert(tree.root, Integer.parseInt(val)); }
+            for (String val : value) { tree.root = tree.insert(tree.root, Double.parseDouble(val)); }
             
             String ask = "1";
 
@@ -138,7 +199,7 @@ public class BinaryTreeMain {
                    System.out.println("[1] TRAVERSALS \n[2] INSERT \n[3] DELETE \n[4] SEARCH \n[5] CLEAR \n[0] EXIT");
                    ask1 = scan.nextLine().replaceAll(" ", "");
 
-                  if (invalidInputSelectA(ask1)) { System.out.println("\nInvalid input! Please select again..."); }
+                  if (invalidInputSelectA(ask1)) { System.out.print("\nInvalid input! Please select again..."); }
          
                 } while (invalidInputSelectA(ask1)); // let the user select again if invalid
             
@@ -154,7 +215,7 @@ public class BinaryTreeMain {
                                 System.out.println("[1] INORDER \n[2] PREORDER \n[3] POSTORDER \n[0] CANCEL");
                                 ask2b = scan.nextLine().replaceAll(" ", "");
                         
-                                if (invalidInputSelectB(ask2b)) { System.out.println("\nInvalid input! Please select again..."); }
+                                if (invalidInputSelectB(ask2b)) { System.out.print("\nInvalid input! Please select again..."); }
                         
                             } while (invalidInputSelectB(ask2b)); // let the user select again if invalid
 
@@ -205,7 +266,7 @@ public class BinaryTreeMain {
                                     System.out.println("\nDo you want to traverse again? \n[1] Yes \n[2] No");
                                     ask2a = scan.nextLine().replaceAll(" ", "");
                             
-                                    if (invalidInputYN(ask2a)) { System.out.println("\nInvalid input! Please select again..."); }
+                                    if (invalidInputYN(ask2a)) { System.out.print("\nInvalid input! Please select again..."); }
                          
                                 } while (invalidInputYN(ask2a)); // let the user select again if invalid
                             }
@@ -226,14 +287,14 @@ public class BinaryTreeMain {
                                 System.out.println("Enter a number to insert in the binary tree: ");
                                 ask3b = scan.nextLine().replaceAll(" ", "");
 
-                                if (invalidInput(ask3b)) { System.out.println("\nInvalid input! Please enter again..."); }
+                                if (invalidInput(ask3b)) { System.out.print("\nInvalid input! Please enter again..."); }
                            
                             } while (invalidInput(ask3b)); // let the user enter again if invalid
 
-                            Node find = tree.search(tree.root, Integer.parseInt(ask3b));
+                            Node find = tree.search(tree.root, Double.parseDouble(ask3b));
 
                             if (find == null) { 
-                                tree.root = tree.insert(tree.root, Integer.parseInt(ask3b));
+                                tree.root = tree.insert(tree.root, Double.parseDouble(ask3b));
                                 System.out.println("\nA number has been successfully added in the binary tree.");
                             }
 
@@ -261,15 +322,15 @@ public class BinaryTreeMain {
                                 System.out.println("Enter a number to delete in the binary tree: ");
                                 ask4b = scan.nextLine().replaceAll(" ", "");
 
-                                if (invalidInput(ask4b)) { System.out.println("\nInvalid input! Please enter again..."); }
+                                if (invalidInput(ask4b)) { System.out.print("\nInvalid input! Please enter again..."); }
                             
                             } while (invalidInput(ask4b)); // let the user enter again if invalid
 
                             if (tree.root != null) {
-                                Node look = tree.search(tree.root, Integer.parseInt(ask4b));
+                                Node look = tree.search(tree.root, Double.parseDouble(ask4b));
 
                                 if (look != null) {
-                                    tree.root = tree.delete(tree.root, Integer.parseInt(ask4b));
+                                    tree.root = tree.delete(tree.root, Double.parseDouble(ask4b));
                                     System.out.println("\nA number has been successfully deleted in the binary tree.");
                                 }
                             
@@ -282,7 +343,7 @@ public class BinaryTreeMain {
                                 System.out.println("\nDo you want to delete more? \n[1] Yes \n[2] No");
                                 ask4a = scan.nextLine().replaceAll(" ", "");
                             
-                                if (invalidInputYN(ask4a)) { System.out.println("\nInvalid input! Please select again..."); }
+                                if (invalidInputYN(ask4a)) { System.out.print("\nInvalid input! Please select again..."); }
                          
                             } while (invalidInputYN(ask4a)); // let the user select again if invalid
                         }
@@ -300,12 +361,12 @@ public class BinaryTreeMain {
                                 System.out.println("Enter a number to search in the binary tree: ");
                                 ask5b = scan.nextLine().replaceAll(" ", "");
 
-                                if (invalidInput(ask5b)) { System.out.println("\nInvalid input! Please enter again..."); }
+                                if (invalidInput(ask5b)) { System.out.print("\nInvalid input! Please enter again..."); }
                             
                             } while (invalidInput(ask5b)); // let the user enter again if invalid
 
                             if (tree.root != null) {
-                                Node result = tree.search(tree.root, Integer.parseInt(ask5b));
+                                Node result = tree.search(tree.root, Double.parseDouble(ask5b));
 
                                 if (result != null) { System.out.println("\nA number has been found in the binary tree."); } 
                             
@@ -318,7 +379,7 @@ public class BinaryTreeMain {
                                 System.out.println("\nDo you want to search again? \n[1] Yes \n[2] No");
                                 ask5a = scan.nextLine().replaceAll(" ", "");
                             
-                                if (invalidInputYN(ask5a)) { System.out.println("\nInvalid input! Please select again..."); }
+                                if (invalidInputYN(ask5a)) { System.out.print("\nInvalid input! Please select again..."); }
                          
                             } while (invalidInputYN(ask5a)); // let the user select again if invalid
                         }
@@ -349,7 +410,7 @@ public class BinaryTreeMain {
                 System.out.println("\nDo you want to try again? \n[1] Yes \n[2] No");
                 askMain = scan.nextLine().replaceAll(" ", "");
                             
-                if (invalidInputYN(askMain)) { System.out.println("\nInvalid input! Please select again..."); }
+                if (invalidInputYN(askMain)) { System.out.print("\nInvalid input! Please select again..."); }
                          
             } while (invalidInputYN(askMain)); // let the user select again if invalid
 
@@ -371,8 +432,20 @@ public class BinaryTreeMain {
         else {
             for (int x = 0; x < _input.length(); x++) {
                 char ch = _input.charAt(x);
-         
-                if (!Character.isDigit(ch)) { invalidInput = true; } 
+                
+                if (!Character.isDigit(ch)) { 
+                    if (ch == '-') { // can read a negative sign
+                        if (_input.length() > 1 && x == 0 && Character.isDigit(_input.charAt(x+1))) { invalidInput = false; }
+                        else { return true; }
+                    }
+                    
+                    else if (ch == '.') { // can read a dot operator
+                        if (_input.length() >= x+2 && x != 0 && Character.isDigit(_input.charAt(x+1))) { invalidInput = false; }
+                        else { return true; }
+                    }
+                    
+                    else { return true; }
+                } 
             }
         }
       
